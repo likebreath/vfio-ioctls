@@ -21,13 +21,15 @@ use kvm_bindings::{
 use kvm_ioctls::DeviceFd;
 use log::{debug, error, warn};
 use vfio_bindings::bindings::vfio::*;
-use vm_memory::{Address, GuestMemory, GuestMemoryMmap, GuestMemoryRegion};
+use vm_memory::{bitmap::AtomicBitmap, Address, GuestMemory, GuestMemoryRegion};
 use vmm_sys_util::errno::Error as SysError;
 use vmm_sys_util::eventfd::EventFd;
 use vmm_sys_util::ioctl::*;
 
 use crate::fam::vec_with_array_field;
 use crate::vfio_ioctls::*;
+
+type GuestMemoryMmap = vm_memory::GuestMemoryMmap<AtomicBitmap>;
 
 #[allow(missing_docs)]
 #[derive(Debug)]
